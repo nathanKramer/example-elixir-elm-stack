@@ -1,0 +1,10 @@
+<html>
+  <head>
+  </head>
+
+  <body>
+  </body>
+  <main role="main" id="main">
+  </main>
+  <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+</html>
