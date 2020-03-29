@@ -1,7 +1,7 @@
 module Main exposing (Model, Msg, init, main, subscriptions, update, view)
 
 import Browser
-import Html exposing (..)
+import Element as E exposing (Element)
 import Json.Decode as D
 
 
@@ -15,13 +15,19 @@ main =
         }
 
 
-type Model
-    = NotYetDefined
+type AppModel
+    = HelloWorld String
+
+
+type alias Model =
+    { title : String
+    , app : AppModel
+    }
 
 
 init : D.Value -> ( Model, Cmd Msg )
 init _ =
-    ( NotYetDefined, Cmd.none )
+    ( { title = "Hello World", app = HelloWorld "Welcome to Elm!" }, Cmd.none )
 
 
 type Msg
@@ -40,15 +46,24 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     Sub.none
 
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Elm Stack"
+    { title = model.title
     , body =
-        [ div []
-            [ text "Welcome to Elm!" ]
+        [ E.layout [] <|
+            let
+                attributes =
+                    []
+            in
+            E.el
+                attributes
+            <|
+                case model.app of
+                    HelloWorld message ->
+                        E.text message
         ]
     }
